@@ -129,6 +129,22 @@ Catmandu::Exporter::Table - ASCII/Markdown table exporter
   | 42 | bar  |
   | 99 | doz  |
 
+
+  #!/usr/bin/env perl
+  use Catmandu::Exporter::Table;
+  my $exp = Catmandu::Exporter::Table->new;
+  $exp->add({ title => "The Hobbit", author => "Tolkien" });
+  $exp->add({ title => "Where the Wild Things Are", author => "Sendak" });
+  $exp->add({ title => "One Thousand and One Nights" });
+  $exp->commit;
+
+  | author  | title                       |
+  |---------|-----------------------------|
+  | Tolkien | The Hobbit                  |
+  | Sendak  | Where the Wild Things Are   |
+  |         | One Thousand and One Nights |
+
+
 =head1 DESCRIPTION
 
 This L<Catmandu::Exporter> exports data in tabular form, formatted in
@@ -138,6 +154,9 @@ bars in table cells are replaced by a space character and cell values can be
 truncated.
 
 =head1 CONFIGURATION
+
+See L<Catmandu::Exporter> for default options and methods (C<file>, C<fh>,
+C<encoding>, C<fix>..., C<add>, C<commit>...).
 
 =over
 
@@ -152,7 +171,7 @@ Column names. By default field names are used.
 =item widths
 
 Column widths. By default column widths are calculated automatically to the
-width of the widest value. With custom width, large values may be truncated.
+width of the widest value. With custom width, larger values may be truncated.
 
 =back
 
