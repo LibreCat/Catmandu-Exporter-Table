@@ -18,33 +18,34 @@ Catmandu::Exporter::Table - ASCII/Markdown table exporter
     | 42 | bar  |
     | 99 | doz  |
 
+
+    #!/usr/bin/env perl
+    use Catmandu::Exporter::Table;
+    my $exp = Catmandu::Exporter::Table->new;
+    $exp->add({ title => "The Hobbit", author => "Tolkien" });
+    $exp->add({ title => "Where the Wild Things Are", author => "Sendak" });
+    $exp->add({ title => "One Thousand and One Nights" });
+    $exp->commit;
+
+    | author  | title                       |
+    |---------|-----------------------------|
+    | Tolkien | The Hobbit                  |
+    | Sendak  | Where the Wild Things Are   |
+    |         | One Thousand and One Nights |
+
 # DESCRIPTION
 
 This [Catmandu::Exporter](https://metacpan.org/pod/Catmandu::Exporter) exports data in tabular form, formatted in
-MultiMarkdown syntax. The resulting format can be used for instance to display
-CSV data or to include data tables in Markdown files. Newlines and vertical
-bars in table cells are replaced by a space character and cell values can be
-truncated.
+MultiMarkdown syntax. The module delegates to [Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable), so
+see the latter for more documentation.
 
 # CONFIGURATION
 
-- fields
+Table output can be controlled with the options `fields`, `columns`,
+`widths`, and `condense`.
 
-    Array, hash reference, or comma-separated list of fields/columns.
-
-- header
-
-    Column names. By default field names are used.
-
-- widths
-
-    Column widths. By default column widths are calculated automatically to the
-    width of the widest value. With custom width, large values may be truncated.
-
-# METHODS
-
-See [Catmandu::Exporter](https://metacpan.org/pod/Catmandu::Exporter), [Catmandu::Addable](https://metacpan.org/pod/Catmandu::Addable), [Catmandu::Fixable](https://metacpan.org/pod/Catmandu::Fixable),
-[Catmandu::Counter](https://metacpan.org/pod/Catmandu::Counter), and [Catmandu::Logger](https://metacpan.org/pod/Catmandu::Logger) for a full list of methods.
+See [Catmandu::Exporter](https://metacpan.org/pod/Catmandu::Exporter) for additional exporter and methods (`file`, `fh`,
+`encoding`, `fix`..., `add`, `commit`...).
 
 # SEE ALSO
 
