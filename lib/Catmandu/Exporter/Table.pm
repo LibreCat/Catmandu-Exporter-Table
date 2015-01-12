@@ -76,7 +76,7 @@ Catmandu::Exporter::Table - ASCII/Markdown table exporter
 
 =head1 SYNOPSIS
 
-  echo '{"one":"my","two":"table"} {"one":"is","two":"nice"}]' | \ 
+  echo '{"one":"my","two":"table"} {"one":"is","two":"nice"}' | \ 
   catmandu convert JSON --multiline 1 to Table
   | one | two   |
   |-----|-------|
