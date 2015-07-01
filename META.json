@@ -4,7 +4,7 @@
       "Jakob Voß"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.5, Dist::Zilla version 5.019, CPAN::Meta::Converter version 2.141520",
+   "generated_by" : "Dist::Zilla version 5.036, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150001",
    "license" : [
       "perl_5"
    ],
@@ -26,20 +26,22 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.036"
+            "Module::Build::Tiny" : "0.039"
          }
       },
       "develop" : {
          "requires" : {
+            "Dist::Milla" : "v1.0.15",
             "Test::Pod" : "1.41"
          }
       },
       "runtime" : {
          "requires" : {
-            "Catmandu" : "0.92",
+            "Catmandu" : "0.9209",
             "IO::Handle::Util" : "0.01",
-            "Text::MarkdownTable" : "v0.2.3",
-            "perl" : "v5.10.0"
+            "JSON::XS" : "2.3",
+            "Text::MarkdownTable" : "v0.3.0",
+            "perl" : "v5.10.1"
          }
       }
    },
@@ -55,9 +57,11 @@
          "web" : "https://github.com/nichtich/Catmandu-Exporter-Table"
       }
    },
-   "version" : "0.2.1",
+   "version" : "0.3.0",
    "x_contributors" : [
-      "Jakob Voss <voss@gbv.de>"
+      "Jakob Voss <jakob@nichtich.de>",
+      "Jakob Voss <voss@gbv.de>",
+      "Johann Rolschewski <rolschewski@gmail.com>"
    ]
 }
 

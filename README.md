@@ -2,24 +2,32 @@
 
 Catmandu::Exporter::Table - ASCII/Markdown table exporter
 
+# STATUS
+
+[![Build Status](https://travis-ci.org/LibreCat/Catmandu-Exporter-Table.png)](https://travis-ci.org/LibreCat/Catmandu-Exporter-Table)
+[![Coverage Status](https://coveralls.io/repos/LibreCat/Catmandu-Exporter-Table/badge.png)](https://coveralls.io/r/LibreCat/Catmandu-Exporter-Table)
+[![Kwalitee Score](http://cpants.cpanauthors.org/dist/Catmandu-Exporter-Table.png)](http://cpants.cpanauthors.org/dist/Catmandu-Exporter-Table)
+
 # SYNOPSIS
 
-    echo '{"one":"my","two":"table"} {"one":"is","two":"nice"}]' | \ 
+With [catmandu](https://metacpan.org/pod/catmandu) command line client:
+
+    echo '{"one":"my","two":"table"} {"one":"is","two":"nice"}' | \ 
     catmandu convert JSON --multiline 1 to Table
     | one | two   |
     |-----|-------|
     | my  | table |
     | is  | nice  |
 
-    catmandu convert CSV to Table --fields id,name --header ID,Name < sample.csv
+    catmandu convert CSV to Table --fields id,name --columns ID,Name < sample.csv
     | ID | Name |
     |----|------|
     | 23 | foo  |
     | 42 | bar  |
     | 99 | doz  |
 
+In Perl scripts:
 
-    #!/usr/bin/env perl
     use Catmandu::Exporter::Table;
     my $exp = Catmandu::Exporter::Table->new;
     $exp->add({ title => "The Hobbit", author => "Tolkien" });
@@ -44,31 +52,64 @@ further convert to other table formats, e.g. `latex`, `html5`, `mediawiki`:
 
     catmandu convert XLS to Table < sheet.xls | pandoc -t html5
 
+By default columns are sorted alphabetically by field name.
+
 # CONFIGURATION
 
 Table output can be controlled with the options `fields`, `columns`,
-`widths`, and `condense` as documented in [Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable). The
-additional option `schema` can be used to supply fields and (optionally)
-columns in a [JSON Table Schema](http://dataprotocols.org/json-table-schema/).
-The schema is a JSON file or HASH reference having the following structure:
+`widths`, and `condense` as documented in [Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable). 
 
-    {
-      "fields: [
-        { "name": "field-name-1", "title": "column title 1 (optional)" },
-        { "name": "field-name-2", "title": "column title 2 (optional)" },
-        ...
-      ]
-    }
+- file
+- fh
+- encoding
+- fix
 
-Without `fields` or `schema`, columns are sorted alphabetically by field
-name.
+    Standard options of [Catmandu:Exporter](Catmandu:Exporter)
+
+- condense
+
+    Write table in condense format with unaligned columns.
+
+- fields
+
+    Field names as comma-separated list or array reference.
+
+- columns
+
+    Column names as comma-separated list or array reference. By default field
+    names are used as column names.
+
+- header
+
+    Include header lines. Enabled by default.
+
+- widths
+
+    Column widths as comma-separated list or array references. Calculated from all
+    rows by default. Long cell values can get truncated with this option.
+
+- schema
+
+    Supply fields and (optionally) columns in a [JSON Table
+    Schema](http://dataprotocols.org/json-table-schema/) as JSON file or hash
+    reference having the following structure:
+
+        {
+          "fields: [
+            { "name": "field-name-1", "title": "column title 1 (optional)" },
+            { "name": "field-name-2", "title": "column title 2 (optional)" },
+            ...
+          ]
+        }
 
 # METHODS
 
-See [Catmandu::Exporter](https://metacpan.org/pod/Catmandu::Exporter) for additional exporter and methods (`file`, `fh`,
-`encoding`, `fix`..., `add`, `commit`...).
+See [Catmandu::Exporter](https://metacpan.org/pod/Catmandu::Exporter) 
 
 # SEE ALSO
 
-[Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable), 
-[Catmandu::Exporter::CSV](https://metacpan.org/pod/Catmandu::Exporter::CSV)
+This module is based on [Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable).
+
+Similar Catmandu Exporters for tabular data include
+[Catmandu::Exporter::CSV](https://metacpan.org/pod/Catmandu::Exporter::CSV), [Catmandu::Exporter::XLS](https://metacpan.org/pod/Catmandu::Exporter::XLS), and
+[Catmandu::Exporter::XLSX](https://metacpan.org/pod/Catmandu::Exporter::XLSX).

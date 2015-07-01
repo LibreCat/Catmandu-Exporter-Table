@@ -78,6 +78,16 @@ __END__
 
 Catmandu::Exporter::Table - ASCII/Markdown table exporter
 
+=begin markdown
+
+# STATUS
+
+[![Build Status](https://travis-ci.org/LibreCat/Catmandu-Exporter-Table.png)](https://travis-ci.org/LibreCat/Catmandu-Exporter-Table)
+[![Coverage Status](https://coveralls.io/repos/LibreCat/Catmandu-Exporter-Table/badge.png)](https://coveralls.io/r/LibreCat/Catmandu-Exporter-Table)
+[![Kwalitee Score](http://cpants.cpanauthors.org/dist/Catmandu-Exporter-Table.png)](http://cpants.cpanauthors.org/dist/Catmandu-Exporter-Table)
+
+=end markdown
+
 =head1 SYNOPSIS
 
 With L<catmandu> command line client:
