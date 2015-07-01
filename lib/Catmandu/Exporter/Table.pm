@@ -1,14 +1,13 @@
 package Catmandu::Exporter::Table;
 
-our $VERSION = '0.2.1';
+our $VERSION = '0.3.0';
 
-use namespace::clean;
 use Catmandu::Sane;
 use Moo;
 use Text::MarkdownTable;
 use IO::Handle::Util ();
 use IO::File;
-use JSON ();
+use JSON::XS ();
 
 with 'Catmandu::Exporter';
 
@@ -24,7 +23,7 @@ has schema => (
                     : IO::File->new($schema, "r");
             die "failed to load JSON Table Schema from $schema" unless $fh;
             local $/; 
-            $schema = JSON::decode_json(<$fh>);
+            $schema = JSON::XS::decode_json(<$fh>);
         }
         $schema;
     }
@@ -38,6 +37,7 @@ has fields => (
         [ map { $_->{name} } @{$_[0]->schema->{fields}} ];
     }
 );
+
 has columns => (
     is      => 'ro',
     lazy    => 1,
@@ -49,6 +49,7 @@ has columns => (
 
 has widths   => (is => 'ro');
 has condense => (is => 'ro');
+has header   => (is => 'ro');
 
 has _table => (
     is      => 'lazy',
@@ -57,7 +58,7 @@ has _table => (
             file => $_[0]->fh,
             map { $_ => $_[0]->$_ }
             grep { defined $_[0]->$_ }
-            qw(fields columns widths condense)
+            qw(fields columns widths condense header)
         );
     },
 );
@@ -70,11 +71,16 @@ sub commit {
     $_[0]->_table->done 
 }
 
+1;
+__END__
+
 =head1 NAME
 
 Catmandu::Exporter::Table - ASCII/Markdown table exporter
 
 =head1 SYNOPSIS
+
+With L<catmandu> command line client:
 
   echo '{"one":"my","two":"table"} {"one":"is","two":"nice"}' | \ 
   catmandu convert JSON --multiline 1 to Table
@@ -83,15 +89,15 @@ Catmandu::Exporter::Table - ASCII/Markdown table exporter
   | my  | table |
   | is  | nice  |
 
-  catmandu convert CSV to Table --fields id,name --header ID,Name < sample.csv
+  catmandu convert CSV to Table --fields id,name --columns ID,Name < sample.csv
   | ID | Name |
   |----|------|
   | 23 | foo  |
   | 42 | bar  |
   | 99 | doz  |
 
+In Perl scripts:
 
-  #!/usr/bin/env perl
   use Catmandu::Exporter::Table;
   my $exp = Catmandu::Exporter::Table->new;
   $exp->add({ title => "The Hobbit", author => "Tolkien" });
@@ -105,7 +111,6 @@ Catmandu::Exporter::Table - ASCII/Markdown table exporter
   | Sendak  | Where the Wild Things Are   |
   |         | One Thousand and One Nights |
 
-
 =head1 DESCRIPTION
 
 This L<Catmandu::Exporter> exports data in tabular form, formatted in
@@ -117,13 +122,52 @@ further convert to other table formats, e.g. C<latex>, C<html5>, C<mediawiki>:
 
     catmandu convert XLS to Table < sheet.xls | pandoc -t html5
 
+By default columns are sorted alphabetically by field name.
+
 =head1 CONFIGURATION
 
 Table output can be controlled with the options C<fields>, C<columns>,
-C<widths>, and C<condense> as documented in L<Text::MarkdownTable>. The
-additional option C<schema> can be used to supply fields and (optionally)
-columns in a L<JSON Table Schema|http://dataprotocols.org/json-table-schema/>.
-The schema is a JSON file or HASH reference having the following structure:
+C<widths>, and C<condense> as documented in L<Text::MarkdownTable>. 
+
+=over
+
+=item file
+
+=item fh
+
+=item encoding
+
+=item fix
+
+Standard options of L<Catmandu:Exporter>
+
+=item condense
+
+Write table in condense format with unaligned columns.
+
+=item fields
+
+Field names as comma-separated list or array reference.
+
+=item columns
+
+Column names as comma-separated list or array reference. By default field
+names are used as column names.
+
+=item header
+
+Include header lines. Enabled by default.
+
+=item widths
+
+Column widths as comma-separated list or array references. Calculated from all
+rows by default. Long cell values can get truncated with this option.
+
+=item schema
+
+Supply fields and (optionally) columns in a L<JSON Table
+Schema|http://dataprotocols.org/json-table-schema/> as JSON file or hash
+reference having the following structure:
 
   {
     "fields: [
@@ -133,19 +177,18 @@ The schema is a JSON file or HASH reference having the following structure:
     ]
   }
 
-Without C<fields> or C<schema>, columns are sorted alphabetically by field
-name.
+=back
 
 =head1 METHODS
 
-See L<Catmandu::Exporter> for additional exporter and methods (C<file>, C<fh>,
-C<encoding>, C<fix>..., C<add>, C<commit>...).
+See L<Catmandu::Exporter> 
 
 =head1 SEE ALSO
 
-L<Text::MarkdownTable>, 
-L<Catmandu::Exporter::CSV>
+This module is based on L<Text::MarkdownTable>.
+
+Similar Catmandu Exporters for tabular data include
+L<Catmandu::Exporter::CSV>, L<Catmandu::Exporter::XLS>, and
+L<Catmandu::Exporter::XLSX>.
 
 =cut
-
-1;
