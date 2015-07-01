@@ -1,4 +1,6 @@
 {{$NEXT}}
+
+0.3.0  2015-07-01 12:19:40 CEST
     - additional option 'header' 
     - fixed and extended documentation
     - fixed dependencies
