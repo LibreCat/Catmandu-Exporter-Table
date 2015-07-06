@@ -59,8 +59,7 @@
    },
    "version" : "0.3.0",
    "x_contributors" : [
-      "Jakob Voss <jakob@nichtich.de>",
-      "Jakob Voss <voss@gbv.de>",
+      "Jakob Voß <jakob.voss@gbv.de>",
       "Johann Rolschewski <rolschewski@gmail.com>"
    ]
 }

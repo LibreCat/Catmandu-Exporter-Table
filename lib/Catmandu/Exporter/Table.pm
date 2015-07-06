@@ -136,9 +136,6 @@ By default columns are sorted alphabetically by field name.
 
 =head1 CONFIGURATION
 
-Table output can be controlled with the options C<fields>, C<columns>,
-C<widths>, and C<condense> as documented in L<Text::MarkdownTable>. 
-
 =over
 
 =item file
@@ -200,5 +197,12 @@ This module is based on L<Text::MarkdownTable>.
 Similar Catmandu Exporters for tabular data include
 L<Catmandu::Exporter::CSV>, L<Catmandu::Exporter::XLS>, and
 L<Catmandu::Exporter::XLSX>.
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright Jakob Voss, 2014-
+
+This is free software; you can redistribute it and/or modify it under the same
+terms as the Perl 5 programming language system itself.
 
 =cut

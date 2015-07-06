@@ -56,9 +56,6 @@ By default columns are sorted alphabetically by field name.
 
 # CONFIGURATION
 
-Table output can be controlled with the options `fields`, `columns`,
-`widths`, and `condense` as documented in [Text::MarkdownTable](https://metacpan.org/pod/Text::MarkdownTable). 
-
 - file
 - fh
 - encoding
@@ -113,3 +110,10 @@ This module is based on [Text::MarkdownTable](https://metacpan.org/pod/Text::Mar
 Similar Catmandu Exporters for tabular data include
 [Catmandu::Exporter::CSV](https://metacpan.org/pod/Catmandu::Exporter::CSV), [Catmandu::Exporter::XLS](https://metacpan.org/pod/Catmandu::Exporter::XLS), and
 [Catmandu::Exporter::XLSX](https://metacpan.org/pod/Catmandu::Exporter::XLSX).
+
+# COPYRIGHT AND LICENSE
+
+Copyright Jakob Voss, 2014-
+
+This is free software; you can redistribute it and/or modify it under the same
+terms as the Perl 5 programming language system itself.
